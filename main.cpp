@@ -17,7 +17,7 @@ std::function<void(unsigned int)> get_result_printer(const std::string &name);
 
 std::function<void(std::vector<unsigned int>)> get_list_printer(const std::string &name);
 
-std::vector<Order> initOrders();
+std::vector<Order> init_orders();
 
 void wait_for_status(const std::vector<Order> &, const OrderStatus);
 
@@ -43,7 +43,7 @@ int main()
 
     ThreadPool orderProcessinPool(4);
 
-    std::vector<Order> orders{initOrders()};
+    std::vector<Order> orders{init_orders()};
 
     OrderProcessor processor;
 
@@ -104,7 +104,7 @@ std::function<void(std::vector<unsigned int>)> get_list_printer(const std::strin
     };
 }
 
-std::vector<Order> initOrders()
+std::vector<Order> init_orders()
 {
     Order ord1(1);
     ord1.addItem({"tomato", 12.23});
