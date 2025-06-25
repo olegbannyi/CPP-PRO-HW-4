@@ -1,4 +1,6 @@
 #include "math.h"
+#include "order-processor.h"
+#include "order.h"
 #include "thread-pool.h"
 #include "worker.h"
 #include <format>
@@ -7,12 +9,12 @@
 #include <sstream>
 #include <vector>
 
-const auto print_single = [](std::string name, unsigned int res) {
+const auto print_single = [](const std::string &name, unsigned int res) {
     std::cout << std::format("=== {} ===\n{}\n", name, res);
 };
 
-std::function<void(std::string, std::vector<unsigned int>)> print_list = [](std::string name,
-                                                                            std::vector<unsigned int> res) {
+std::function<void(std::string, std::vector<unsigned int>)> print_list = [](const std::string &name,
+                                                                            const std::vector<unsigned int> &res) {
     std::stringstream ss;
     ss << std::format("=== {} ===\n", name);
     for (const auto &v : res)
@@ -37,6 +39,23 @@ int main()
     pool.addWorker<std::vector<unsigned int>, unsigned int>(std::move(w4), 30);
 
     pool.waitAll();
+
+    Order ord1(1);
+    ord1.addItem({"tomato", 12.23});
+    ord1.addItem({"apricot", 23.45});
+
+    Order ord2(2);
+    ord2.addItem({"orange", 10.23});
+    ord2.addItem({"pear", 40.23});
+
+    std::vector<Order> orders{ord1, ord2};
+
+    OrderProcessor processor;
+
+    orders = processor.validateOrders(orders);
+    orders = processor.calculatePricing(orders);
+    orders = processor.checkInventory(orders);
+    processor.generateInvoices(orders);
 
     return 0;
 }
