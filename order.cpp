@@ -1,8 +1,7 @@
 #include "order.h"
-#include <string>
 #include <vector>
 
-Order::Order(int id) : id_(id), status_("initial")
+Order::Order(int id) : id_(id), status_(OrderStatus::initial)
 {
 }
 
@@ -26,12 +25,12 @@ void Order::setTotalPrice(double totalPrice)
     totalPrice_ = totalPrice;
 }
 
-std::string Order::getStatus() const
+OrderStatus Order::getStatus() const
 {
     return status_;
 }
 
-void Order::setStatus(const std::string &status)
+void Order::setStatus(const OrderStatus status)
 {
     status_ = status;
 }

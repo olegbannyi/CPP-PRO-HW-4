@@ -31,7 +31,7 @@ std::vector<Order> OrderProcessor::validateOrders(const std::vector<Order> &rawO
             continue;
         }
 
-        order.setStatus("valid");
+        order.setStatus(OrderStatus::valid);
 
         result.push_back(order);
     }
@@ -54,7 +54,7 @@ std::vector<Order> OrderProcessor::calculatePricing(const std::vector<Order> &va
         }
 
         order.setTotalPrice(totalPrice);
-        order.setStatus("priced");
+        order.setStatus(OrderStatus::priced);
         result.push_back(order);
     }
 
@@ -81,7 +81,7 @@ std::vector<Order> OrderProcessor::checkInventory(const std::vector<Order> &pric
         if (available)
         {
             auto order = ord;
-            order.setStatus("final");
+            order.setStatus(OrderStatus::final);
             result.push_back(order);
         }
         else

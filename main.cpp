@@ -19,7 +19,7 @@ std::function<void(std::vector<unsigned int>)> get_list_printer(const std::strin
 
 std::vector<Order> initOrders();
 
-void wait_for_status(const std::vector<Order> &, const std::string &);
+void wait_for_status(const std::vector<Order> &, const OrderStatus);
 
 int main()
 {
@@ -54,7 +54,7 @@ int main()
     Worker<std::vector<Order>> op_w2(
         "pricing",
         [&processor, &orders]() -> std::vector<Order> {
-            wait_for_status(orders, "valid");
+            wait_for_status(orders, OrderStatus::valid);
             return processor.calculatePricing(orders);
         },
         [&orders](std::vector<Order> result) { orders = result; });
@@ -62,7 +62,7 @@ int main()
     Worker<std::vector<Order>> op_w3(
         "inventory",
         [&processor, &orders]() -> std::vector<Order> {
-            wait_for_status(orders, "priced");
+            wait_for_status(orders, OrderStatus::priced);
             return processor.checkInventory(orders);
         },
         [&orders](std::vector<Order> result) { orders = result; });
@@ -70,7 +70,7 @@ int main()
     Worker<std::vector<Order>> op_w4(
         "invoice",
         [&processor, &orders]() -> std::vector<Order> {
-            wait_for_status(orders, "final");
+            wait_for_status(orders, OrderStatus::final);
             processor.generateInvoices(orders);
             return orders;
         },
@@ -119,7 +119,7 @@ std::vector<Order> initOrders()
     return orders;
 }
 
-void wait_for_status(const std::vector<Order> &orders, const std::string &status)
+void wait_for_status(const std::vector<Order> &orders, const OrderStatus status)
 {
     if (!orders.empty())
     {

@@ -24,7 +24,7 @@ class Order
     int id_;
     std::vector<Item> items_;
     double totalPrice_;
-    std::string status_;
+    OrderStatus status_;
 
   public:
     explicit Order(int id);
@@ -32,8 +32,8 @@ class Order
     std::vector<Item> getItems() const;
     double getTotalPrice() const;
     void setTotalPrice(double totalPrice);
-    std::string getStatus() const;
-    void setStatus(const std::string &);
+    OrderStatus getStatus() const;
+    void setStatus(const OrderStatus);
     void addItem(const Item);
 };
 
