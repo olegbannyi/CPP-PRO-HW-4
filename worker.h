@@ -10,11 +10,11 @@ template <typename R, typename... A> class Worker
 {
     std::string name_;
     std::function<R(A...)> functor_;
-    std::function<void(std::string, R)> output_;
+    std::function<void(const R &)> callback_;
 
   public:
-    Worker(std::string name, std::function<R(A...)> functor, std::function<void(std::string, R)> output)
-        : name_(std::move(name)), functor_(std::move(functor)), output_(std::move(output))
+    Worker(std::string name, std::function<R(A...)> functor, std::function<void(R)> callback)
+        : name_(std::move(name)), functor_(std::move(functor)), callback_(std::move(callback))
     {
     }
     void run(A... args)
@@ -22,7 +22,7 @@ template <typename R, typename... A> class Worker
         try
         {
             R result = functor_(args...);
-            output_(name_, result);
+            callback_(result);
         }
         catch (const std::exception &e)
         {

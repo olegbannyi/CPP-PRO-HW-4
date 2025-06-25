@@ -10,6 +10,14 @@ struct Item
     double price;
 };
 
+enum OrderStatus
+{
+    initial,
+    valid,
+    priced,
+    final
+};
+
 class Order
 {
   private:
