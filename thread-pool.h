@@ -27,6 +27,8 @@ class ThreadPool
                 t.join();
             }
         }
+
+        threads_.clear();
     }
     ~ThreadPool()
     {
