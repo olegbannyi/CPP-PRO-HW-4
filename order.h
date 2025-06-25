@@ -29,4 +29,4 @@ class Order
     void addItem(const Item);
 };
 
-#endif
+#endif // ORDER_H

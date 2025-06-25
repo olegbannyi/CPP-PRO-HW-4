@@ -1,7 +1,7 @@
 #ifndef ORDER_PROCESSOR_H
 #define ORDER_PROCESSOR_H
 
-#include "./order.h"
+#include "order.h"
 #include <vector>
 
 class OrderProcessor
@@ -13,4 +13,4 @@ class OrderProcessor
     void generateInvoices(const std::vector<Order> &finalOrders);
 };
 
-#endif
+#endif // ORDER_PROCESSOR_H

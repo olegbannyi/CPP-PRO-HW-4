@@ -1,3 +1,6 @@
+#include "math.h"
+
+#include <cstddef>
 #include <vector>
 
 bool is_prime(const unsigned int value)

@@ -1,3 +1,6 @@
+#ifndef THREAD_POOL_H
+#define THREAD_POOL_H
+
 #include "worker.h"
 #include <thread>
 #include <vector>
@@ -30,3 +33,5 @@ class ThreadPool
         waitAll();
     }
 };
+
+#endif // THREAD_POOL_H
